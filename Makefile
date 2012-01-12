@@ -19,14 +19,8 @@ src/jquery.scalable.auto.js: src/jquery.scalable.js src/jquery.scalable.ready.js
 .PHONY: check test
 check test:
 	## Lint the source and run the test suite
-	jshint src/jquery.scalable.js
-	jshint src/jquery.scalable.ready.js
-	jshint src/jquery.scalable.auto.js
-
-	jshint test/setup.js
-	jshint test/test.js
-	jshint test/version.js
-	jshint test/summary.js
+	jshint src/*.js
+	jshint test/*.js
 
 	@echo
 	@node test/version.js '~1.4'
@@ -58,10 +52,11 @@ qunit:
 	## Update QUnit from the jQuery website
 	@# Note: Deletes old files before getting the new
 
-	-rm test/qunit-git.css test/qunit-git.js
-	wget -nv -P test http://code.jquery.com/qunit/qunit-git.css
-	wget -nv -P test http://code.jquery.com/qunit/qunit-git.js
+	-rm test/qunit/qunit-git.css test/qunit/qunit-git.js
+	wget -nv -P test/qunit http://code.jquery.com/qunit/qunit-git.css
+	wget -nv -P test/qunit http://code.jquery.com/qunit/qunit-git.js
 
 # tagging
 # $ git tag -a 0.0.1 -m "Version 0.0.1, initial beta release"
+# $ git push --tags
 # automatically update test to the latest QUnit?
