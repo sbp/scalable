@@ -1,0 +1,22 @@
+{
+  "name": "scalable",
+  "version": "0.0.1",
+  "title": "jQuery Scalable",
+  "author": {
+    "name": "Sean B. Palmer",
+    "url": "http://sbp.so/"
+  },
+  "licenses": [{
+    "type": "Apache-2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0"
+  }],
+  "dependencies": {
+    "jquery": "~1.4",
+    "ui-draggable": "1.7"
+  },
+
+  "description": "Vector image scaling UI controls",
+  "keywords": ["scalable", "scale", "jquery-ui", "svg", "vector", "resize"],
+  "homepage": "http://sbp.so/scalable",
+  "files": ["jquery.scalable.min.js"]
+}

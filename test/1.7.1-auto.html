@@ -1,0 +1,45 @@
+<!doctype html>
+<title>jQuery Scalable: Test Suite</title>
+<link rel="stylesheet" href="http://sbp.so/style.css">
+<link rel="stylesheet" href="qunit-git.css">
+<script src="qunit-git.js"></script>
+
+<script src="../lib/jquery-1.7.1.min.js"></script>
+<script src="../lib/jquery-ui-1.8.16.custom.min.js"></script>
+<script src="../jquery.scalable.auto.min.js"></script>
+<script src="jquery.simulate.js"></script>
+<script src="setup.js"></script>
+<script>
+test("Simple scale", function () {
+	expect(5);
+	var img = $(".scalable"),
+		wrapper = img.parent(),
+		s = {
+			target: img,
+			handle: $(".ui-resizable-handle", wrapper),
+			bar: $(".ui-scalable-bar", wrapper),
+			wrapper: wrapper
+		};
+
+	ok(s.wrapper.hasClass("ui-wrapper"), "Wrapper has ui-wrapper class");
+
+	drag(s.handle, 48, 0);
+	equals(s.target.width(), 528, "Enlarged result is 48px wider");
+	equals(s.target.height(), 352, "Enlarged result is 32px taller");
+
+	drag(s.handle, -96, 0);
+	equals(s.target.width(), 432, "Shrunk result is 48px thinner");
+	equals(s.target.height(), 288, "Shrunk result is 32px shorter");
+});
+</script>
+
+<h1 id="qunit-header">jQuery Scalable: Auto Tests</h1>
+
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">
+<p><img src="sample.svg" width="480" height="320" class="scalable">
+</div>
+
+<p style="color:#aaa;text-align:right">This test suite uses <a href="http://docs.jquery.com/QUnit" style="color:#99c">QUnit</a>.
