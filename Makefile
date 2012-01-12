@@ -4,21 +4,19 @@
 SHELL = /bin/sh
 
 .PHONY: all build
-all build: jquery.scalable.min.js jquery.scalable.auto.min.js
+all build: jquery.scalable.min.js jquery.scalable.auto.min.js src/jquery.scalable.auto.js
 	@## Create minified production files
 
-jquery.scalable.min.js: src/jquery.scalable.js
+%.min.js: src/%.js
 	yuicompressor $< > $@
 
-jquery.scalable.auto.min.js: src/jquery.scalable.auto.js
-	yuicompressor $< > $@
-
-src/jquery.scalable.auto.js: src/jquery.scalable.js src/jquery.scalable.ready.js
+%.auto.js: %.js %.ready.js
 	cat $^ > $@
 
 .PHONY: check test
 check test:
 	## Lint the source and run the test suite
+	@# Automatically update test to the latest QUnit?
 	jshint src/*.js
 	jshint test/*.js
 
@@ -33,15 +31,18 @@ check test:
 
 .PHONY: clean
 clean:
-	## Remove minified production files
+	## Remove minified production files and intermediaries
 	@# Note: Using $< would build the script as a dependency
 	-rm jquery.scalable.min.js
+	-rm jquery.scalable.auto.min.js
+	-rm src/jquery.scalable.auto.js
 
 .PHONY: commit
 commit: check
 	## Commit the code and push to github
 	git add .
-	git commit -a && git push origin master
+	git commit -a
+	git push origin master
 
 .PHONY: help targets
 help targets: $(lastword $(MAKEFILE_LIST))
@@ -53,11 +54,17 @@ qunit:
 	## Update QUnit from the jQuery website
 	@# Note: Deletes old files before getting the new
 
-	-rm test/qunit/qunit-git.css test/qunit/qunit-git.js
+	-rm test/qunit/qunit-git.css
+	-rm test/qunit/qunit-git.js
 	wget -nv -P test/qunit http://code.jquery.com/qunit/qunit-git.css
 	wget -nv -P test/qunit http://code.jquery.com/qunit/qunit-git.js
 
-# tagging
-# $ git tag -a 0.0.1 -m "Version 0.0.1, initial beta release"
-# $ git push --tags
-# automatically update test to the latest QUnit?
+.PHONY: tag
+tag: check
+	## Tag the most recent commit, and push the tag to github
+ifndef v
+	$(error Missing variable. Specify e.g. v=0.0.1 as an argument)
+else
+	git tag -a $(v) -m "Version $(v)"
+	git push --tags
+endif
