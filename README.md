@@ -12,8 +12,8 @@ Download and use
 
 There are two flavours of jQuery Scalable that can be downloaded, a manual flavour and an automatic flavour. The manual flavour requires you to call the `.scalable()` method on the elements you want to be scalable. The automatic flavour will do that automatically on any element with the "scalable" class set.
 
-* **Manual**: [jquery.scalable.min.js](/sbp/scalable/master/jquery.scalable.min.js)
-* **OR Automatic**: [jquery.scalable.auto.min.js](/sbp/scalable/master/jquery.scalable.auto.min.js)
+* **Manual**: [jquery.scalable.min.js](https://raw.github.com/sbp/scalable/master/jquery.scalable.min.js)
+* **OR Automatic**: [jquery.scalable.auto.min.js](https://raw.github.com/sbp/scalable/master/jquery.scalable.auto.min.js)
 
 Example of the manual flavour:
 
@@ -47,7 +47,7 @@ Here the image is automatically given the scalable interface because it has `cla
 Usage notes
 ---
 
-You must set at least a `width` attribute on `<img>` elements for the code to work, a limitation due to the use of jQuery UI Resizable. You can attempt to use the scalable interface on any element, but vector images are the core intended functionality, and only those have been tested rigorously.
+You must set both `width` and `height` attributes on `<img>` elements for the code to work, a limitation due to the use of jQuery UI Resizable. You can attempt to use the scalable interface on any element, but vector images are the core intended functionality, and only those have been tested rigorously.
 
 The code should work with jQuery 1.4 onwards. The code has not been tested with versions of jQuery UI prior to 1.8.16. There is an extensive test suite. The code is known to not work in any version if IE up to and including IE9. It is not known whether this is a bug in IE9, or a bug in jQuery UI. If the code does not work in other browsers, please [submit an issue](issues/new).
 
