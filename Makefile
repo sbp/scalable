@@ -63,4 +63,5 @@ qunit:
 	wget -nv -P test http://code.jquery.com/qunit/qunit-git.js
 
 # tagging
+# $ git tag -a 0.0.1 -m "Version 0.0.1, initial beta release"
 # automatically update test to the latest QUnit?
