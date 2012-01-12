@@ -12,8 +12,8 @@ Download and use
 
 There are two flavours of jQuery Scalable that can be downloaded, a manual flavour and an automatic flavour. The manual flavour requires you to call the `.scalable()` method on the elements you want to be scalable. The automatic flavour will do that automatically on any element with the "scalable" class set.
 
-* **Manual**: [jquery.scalable.min.js](jquery.scalable.min.js)
-* **Automatic**: [jquery.scalable.auto.min.js](jquery.scalable.auto.min.js)
+* **Manual**: [jquery.scalable.min.js](/sbp/scalable/master/jquery.scalable.min.js)
+* **OR Automatic**: [jquery.scalable.auto.min.js](/sbp/scalable/master/jquery.scalable.auto.min.js)
 
 Example of the manual flavour:
 
