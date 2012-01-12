@@ -4,8 +4,10 @@
 SHELL = /bin/sh
 
 .PHONY: all build
-all build: jquery.scalable.min.js jquery.scalable.auto.min.js src/jquery.scalable.auto.js
+all build: jquery.scalable.min.js jquery.scalable.auto.min.js
 	@## Create minified production files
+
+.SECONDARY: src/jquery.scalable.auto.js
 
 %.min.js: src/%.js
 	yuicompressor $< > $@
