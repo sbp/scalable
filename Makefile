@@ -40,6 +40,7 @@ clean:
 .PHONY: commit
 commit: check
 	## Commit the code and push to github
+	git add .
 	git commit -a && git push origin master
 
 .PHONY: help targets
