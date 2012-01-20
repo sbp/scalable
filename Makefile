@@ -2,6 +2,7 @@
 # Documentation: $ make help
 
 SHELL = /bin/sh
+makefile = $(lastword $(MAKEFILE_LIST))
 
 .PHONY: all build
 all build: jquery.scalable.min.js jquery.scalable.auto.min.js
@@ -10,7 +11,7 @@ all build: jquery.scalable.min.js jquery.scalable.auto.min.js
 .SECONDARY: src/jquery.scalable.auto.js
 
 %.min.js: src/%.js
-	yuicompressor $< > $@
+	uglifyjs $< > $@
 
 %.auto.js: %.js %.ready.js
 	cat $^ > $@
@@ -47,15 +48,14 @@ commit: check
 	git push origin master
 
 .PHONY: help targets
-help targets: $(lastword $(MAKEFILE_LIST))
+help targets:
 	@## Show Makefile targets and their functions
-	@sed -n '/^.@*## /{s/@*## //;x;s/:.*//;G;p;};h' $<
+	@sed -n '/^.@*## /{s/@*## //;x;s/:.*//;G;p;};h' $(makefile)
 
 .PHONY: qunit
 qunit:
 	## Update QUnit from the jQuery website
 	@# Note: Deletes old files before getting the new
-
 	-rm test/qunit/qunit-git.css
 	-rm test/qunit/qunit-git.js
 	wget -nv -P test/qunit http://code.jquery.com/qunit/qunit-git.css
@@ -64,9 +64,9 @@ qunit:
 .PHONY: tag
 tag: check
 	## Tag the most recent commit, and push the tag to github
-ifndef v
-	$(error Missing variable. Specify e.g. v=0.0.1 as an argument)
-else
+ifdef v
 	git tag -a $(v) -m "Version $(v)"
 	git push --tags
+else
+	$(error Missing variable. Specify e.g. v=0.0.1 as an argument)
 endif
