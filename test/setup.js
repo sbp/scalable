@@ -21,6 +21,33 @@ var setup = function () {
 	};
 };
 
+var setup2 = function (style) {
+	var img = $("<img>").attr({
+		id: "test01",
+		src: "sample.svg",
+		width: "480",
+		height: "320"
+	}).css(style || {});
+
+	var fixture = $("#qunit-fixture")
+		.append(img);
+
+	img.scalable();
+	var wrapper = img.parent();
+
+	return {
+		target: img,
+		handle: $(".ui-resizable-handle", wrapper),
+		bar: $(".ui-scalable-bar", wrapper),
+		wrapper: wrapper
+	};
+};
+
+var reset = function () {
+	var fixture = $("#qunit-fixture")
+		.empty();
+};
+
 $.extend($.simulate.prototype, {
 	drag: function( el ) {
 		var self = this,

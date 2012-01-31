@@ -63,7 +63,7 @@ qunit:
 
 .PHONY: tag
 tag: check
-	## Tag the most recent commit, and push the tag to github
+	## Tag and push to github, e.g. make tag v=0.0.1
 ifdef v
 	git tag -a $(v) -m "Version $(v)"
 	git push --tags

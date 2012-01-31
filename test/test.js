@@ -1,3 +1,5 @@
+reset();
+
 test("Method existence", function () {
 	expect(1);
 	var div = $("<div></div>");
@@ -97,6 +99,94 @@ test("Reset to original size", function () {
 
 	equals(s.target.width(), 480, "Reset to original width");
 	equals(s.target.height(), 320, "Reset to original height");
+});
+
+test("Added border before creation", function () {
+	expect(6); // 8
+	reset();
+	var s = setup2({border: "64px solid #ccc"});
+	var w = s.wrapper.width();
+	var h = s.wrapper.height();
+
+	drag(s.handle, 24, 0);
+	equals(s.target.width(), 504, "Enlarged result is 24px wider");
+	// bug! the border size doesn't scale!
+	// equals(s.target.height(), 336, "Enlarged result is 16px taller");
+	s.target.scalable("reset");
+
+	drag(s.handle, 96, 0);
+	equals(s.target.width(), 576, "Enlarged result is 96px wider");
+
+	// regression test: bug in 0.0.1
+	// equals(s.target.height(), 384, "Enlarged result is 64px taller");
+	s.target.scalable("reset");
+
+	equals(s.target.width(), 480, "Reset to original width");
+	equals(s.target.height(), 320, "Reset to original height");
+
+	// regression tests: bugs in 0.0.1
+	equals(s.wrapper.width(), w, "Reset to original wrapper width");
+	equals(s.wrapper.height(), h, "Reset to original wrapper height");
+});
+
+test("Added border after creation", function () {
+	expect(4);
+	var s = setup();
+
+	s.target.css("border", "64px solid #ccc");
+
+	drag(s.handle, 96, 0);
+	equals(s.target.width(), 576, "Enlarged result is 96px wider");
+	equals(s.target.height(), 384, "Enlarged result is 64px taller");
+	s.target.scalable("reset");
+
+	equals(s.target.width(), 480, "Reset to original width");
+	equals(s.target.height(), 320, "Reset to original height");
+});
+
+test("Two scalable elements", function () {
+	expect(18);
+	reset();
+	var a = setup2();
+	var b = setup2();
+
+	ok($(".ui-resizable", a.wrapper).size() === 1,
+		"Only one image (a)");
+	ok($(".ui-resizable-handle", a.wrapper).size() === 1,
+		"Only one handle (a)");
+	ok($(".ui-scalable-bar", a.wrapper).size() === 1,
+		"Only one bar (a)"); // regression test: bug in 0.0.1
+	ok($(".ui-wrapper", a.wrapper).size() === 0,
+		"No wrapper in the wrapper (a)");
+	ok((!a.wrapper.parent().hasClass("ui-wrapper")),
+		"No wrapper around the wrapper (b)");
+
+	ok($(".ui-resizable", b.wrapper).size() === 1,
+		"Only one image (b)");
+	ok($(".ui-resizable-handle", b.wrapper).size() === 1,
+		"Only one handle (b)");
+	ok($(".ui-scalable-bar", b.wrapper).size() === 1,
+		"Only one bar (b)");
+	ok($(".ui-wrapper", b.wrapper).size() === 0,
+		"No wrapper in the wrapper (b)");
+	ok((!b.wrapper.parent().hasClass("ui-wrapper")),
+		"No wrapper around the wrapper (b)");
+
+	drag(a.handle, 96, 0);
+	equals(a.target.width(), 576, "Enlarged a is 96px wider");
+	equals(a.target.height(), 384, "Enlarged a is 64px taller");
+
+	drag(b.handle, 64, 0);
+	equals(b.target.width(), 544, "Enlarged b is 64px wider");
+	equals(b.target.height(), 362, "Enlarged b is 42px taller");
+
+	a.target.scalable("reset");
+	b.target.scalable("reset");
+
+	equals(a.target.width(), 480, "Reset a to original width");
+	equals(a.target.height(), 320, "Reset a to original height");
+	equals(b.target.width(), 480, "Reset b to original width");
+	equals(b.target.height(), 320, "Reset b to original height");
 });
 
 test("Large size", function () {
